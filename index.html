@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste — Produk Ramah Lingkungan</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#home">🌱 <span>EcoWaste</span></a>
+
+            <button class="nav-toggle" aria-label="Buka navigasi" aria-expanded="false">☰</button>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#products">Produk</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+
+            <div class="actions">
+                <button class="cart-icon" aria-label="Lihat keranjang">🛒 <span id="cart-count">0</span></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container hero-inner">
+                <div class="hero-text">
+                    <h1>Produk Ramah Lingkungan untuk Kehidupan Sehari-hari</h1>
+                    <p>Solusi sederhana untuk mengurangi limbah plastik — produk berkualitas, etis, dan terjangkau.</p>
+                    <p class="hero-cta"><a class="btn" href="#products">Belanja Sekarang</a></p>
+                </div>
+                <div class="hero-visual" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <ul class="features-grid">
+                    <li>
+                        <h3>Mudah & Aman</h3>
+                        <p>Transaksi aman dan pengiriman cepat ke seluruh Indonesia.</p>
+                    </li>
+                    <li>
+                        <h3>Ramah Lingkungan</h3>
+                        <p>Produk terpilih yang membantu mengurangi sampah plastik.</p>
+                    </li>
+                    <li>
+                        <h3>Dukungan Lokal</h3>
+                        <p>Mendukung usaha kecil dan produsen berkelanjutan.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="products" class="products">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Produk Ramah Lingkungan</h2>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Semua</button>
+                        <button class="filter-btn" data-filter="Fashion">Fashion</button>
+                        <button class="filter-btn" data-filter="Lifestyle">Lifestyle</button>
+                        <button class="filter-btn" data-filter="Personal Care">Personal Care</button>
+                    </div>
+                </div>
+
+                <div id="products-container" class="products-grid">
+                    <!-- Produk akan dimuat di sini oleh script.js -->
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>Tentang EcoWaste</h2>
+                <p>Kami berkomitmen membantu transisi menuju konsumsi yang lebih berkelanjutan melalui produk-produk yang dirancang untuk mengurangi limbah dan dampak lingkungan.</p>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>Pertanyaan yang Sering Diajukan</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-toggle">Bagaimana cara melakukan pembelian?</button>
+                        <div class="faq-content">
+                            <p>Cukup pilih produk yang Anda inginkan, tambahkan ke keranjang, dan lanjutkan ke checkout. Anda dapat membayar melalui transfer bank atau e-wallet yang tersedia.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-toggle">Berapa lama pengiriman?</button>
+                        <div class="faq-content">
+                            <p>Pengiriman ke area Jakarta memakan waktu 1-2 hari kerja. Untuk area lainnya, estimasi adalah 2-5 hari kerja tergantung lokasi.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-toggle">Apakah ada garansi uang kembali?</button>
+                        <div class="faq-content">
+                            <p>Ya, kami menawarkan jaminan kepuasan 100%. Jika produk tidak sesuai dengan deskripsi, Anda dapat mengembalikannya dalam 14 hari untuk pengembalian dana penuh.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-toggle">Bagaimana dengan kebijakan pengembalian?</button>
+                        <div class="faq-content">
+                            <p>Produk dapat dikembalikan dalam 14 hari setelah pembelian jika belum digunakan dan dalam kondisi asli. Biaya pengiriman pengembalian ditanggung oleh pelanggan.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-toggle">Apakah Anda mengirim ke luar negeri?</button>
+                        <div class="faq-content">
+                            <p>Saat ini, kami hanya melayani pengiriman ke seluruh Indonesia. Kami sedang mengembangkan layanan pengiriman internasional, harap pantau pembaruan kami.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="site-footer">
+        <div class="container footer-main">
+            <div class="footer-col">
+                <h3>EcoWaste</h3>
+                <p>Produk ramah lingkungan untuk kehidupan berkelanjutan.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Menu</h4>
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#products">Produk</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Kontak</h4>
+                <p>Email: <a href="mailto:hello@ecowaste.com">hello@ecowaste.com</a></p>
+                <p>Telepon: <a href="tel:+62812345678">+62-812-345-678</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Ikuti Kami</h4>
+                <ul class="social-links">
+                    <li><a href="#" aria-label="Facebook">f</a></li>
+                    <li><a href="#" aria-label="Instagram">📷</a></li>
+                    <li><a href="#" aria-label="Twitter">𝕏</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-credits">
+            <p>&copy; <span id="year">2025</span> EcoWaste. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal (tetap ada untuk kompatibilitas script) -->
+    <div id="cart-modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close" aria-label="Tutup">×</button>
+            <h2>Keranjang Belanja</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <p>Total: <span id="cart-total">Rp 0</span></p>
+                <button id="checkout-btn" class="btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sederhana: toggle navigasi mobile dan set tahun footer
+        (function(){
+            const toggle = document.querySelector('.nav-toggle');
+            const nav = document.querySelector('.main-nav');
+            toggle && toggle.addEventListener('click', () => {
+                const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', String(!expanded));
+                nav && nav.classList.toggle('open');
+            });
+
+            document.getElementById('year').textContent = new Date().getFullYear();
+        })();
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
