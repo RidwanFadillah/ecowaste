@@ -162,12 +162,29 @@
     <!-- Shopping Cart Modal (tetap ada untuk kompatibilitas script) -->
     <div id="cart-modal" class="modal" aria-hidden="true">
         <div class="modal-content">
-            <button class="close" aria-label="Tutup">×</button>
-            <h2>Keranjang Belanja</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <p>Total: <span id="cart-total">Rp 0</span></p>
-                <button id="checkout-btn" class="btn">Checkout</button>
+            <div class="modal-header">
+                <h2>🛒 Keranjang Belanja</h2>
+                <button class="close" aria-label="Tutup">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="cart-items" class="cart-items-container"></div>
+                <div class="cart-empty-state" id="empty-state" style="display:none;">
+                    <div class="empty-icon">🛒</div>
+                    <p>Keranjang belanja Anda kosong</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">Rp 0</span>
+                    </div>
+                    <div class="summary-row highlight">
+                        <strong>Total:</strong>
+                        <strong id="cart-total">Rp 0</strong>
+                    </div>
+                </div>
+                <button id="checkout-btn" class="btn btn-checkout">Lanjut ke Checkout</button>
             </div>
         </div>
     </div>

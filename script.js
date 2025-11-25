@@ -240,39 +240,49 @@ function showNotification(message) {
 // Tampilkan isi keranjang
 function displayCart() {
     if (cart.length === 0) {
-        cartItems.innerHTML = '<p>Keranjang belanja Anda kosong.</p>';
+        document.getElementById('cart-items').style.display = 'none';
+        document.getElementById('empty-state').style.display = 'block';
+        document.getElementById('subtotal').textContent = 'Rp 0';
         cartTotal.textContent = 'Rp 0';
         return;
     }
     
-    cartItems.innerHTML = cart.map(item => `
-        <div class="cart-item">
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('cart-items').style.display = 'block';
+    
+    const cartItemsContainer = document.querySelector('.cart-items-container');
+    cartItemsContainer.innerHTML = cart.map(item => `
+        <div class="cart-item" data-item-id="${item.id}">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
                 <p class="cart-item-name">${item.name}</p>
                 <p class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')}</p>
             </div>
-            <div class="cart-item-quantity">
-                <button class="quantity-btn decrease" data-id="${item.id}">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="quantity-btn increase" data-id="${item.id}">+</button>
+            <div class="cart-item-controls">
+                <div class="quantity-group">
+                    <button class="quantity-btn decrease" data-id="${item.id}">−</button>
+                    <span class="quantity">${item.quantity}</span>
+                    <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                </div>
+                <button class="remove-item" data-id="${item.id}" title="Hapus">🗑</button>
             </div>
-            <button class="remove-item" data-id="${item.id}">Hapus</button>
         </div>
     `).join('');
     
     // Hitung total
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById('subtotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
     cartTotal.textContent = `Rp ${total.toLocaleString('id-ID')}`;
     
     // Add event listeners untuk tombol di keranjang
-    document.querySelectorAll('.decrease').forEach(button => {
+    document.querySelectorAll('.quantity-btn.decrease').forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = parseInt(e.target.dataset.id);
             updateQuantity(productId, -1);
         });
     });
     
-    document.querySelectorAll('.increase').forEach(button => {
+    document.querySelectorAll('.quantity-btn.increase').forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = parseInt(e.target.dataset.id);
             updateQuantity(productId, 1);
@@ -320,17 +330,24 @@ function updateQuantity(productId, change) {
 
 // Hapus item dari keranjang
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    
-    // Simpan ke localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Update tampilan
-    updateCartCount();
-    displayCart();
-    
-    // Tampilkan notifikasi
-    showNotification('Produk dihapus dari keranjang');
+    const cartItem = document.querySelector(`.cart-item[data-item-id="${productId}"]`);
+    if (cartItem) {
+        // Fade out animation
+        cartItem.style.animation = 'fadeOut 0.3s ease forwards';
+        setTimeout(() => {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            displayCart();
+            showNotification('Produk dihapus dari keranjang');
+        }, 300);
+    } else {
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+        showNotification('Produk dihapus dari keranjang');
+    }
 }
 
 // Proses checkout
@@ -429,4 +446,41 @@ document.addEventListener('keydown', (e) => {
             }
         });
     });
+})();
+
+// Scroll Animation Handler (Intersection Observer)
+(function(){
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.animation = entry.target.dataset.animation || 'fadeInUp 0.6s ease forwards';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe sections for scroll animations
+    document.querySelectorAll('.products h2, .about h2, .features-grid li, .faq h2').forEach(el => {
+        el.style.opacity = '0';
+        el.dataset.animation = 'slideInLeft 0.6s ease forwards';
+        observer.observe(el);
+    });
+})();
+
+// Parallax effect on hero visual (gentle)
+(function(){
+    const heroVisual = document.querySelector('.hero-visual');
+    if (!heroVisual) return;
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const parallaxValue = scrolled * 0.3;
+        heroVisual.style.backgroundPosition = `center ${parallaxValue * 0.5}px`;
+    }, { passive: true });
 })();
